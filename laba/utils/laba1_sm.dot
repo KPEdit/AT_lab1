@@ -1,0 +1,186 @@
+digraph laba1 {
+
+    node
+        [shape=Mrecord width=1.5];
+
+    subgraph cluster_LabaMap {
+
+        label="LabaMap";
+
+        //
+        // States (Nodes)
+        //
+
+        "LabaMap::Start"
+            [label="{Start}"];
+
+        "LabaMap::Line"
+            [label="{Line}"];
+
+        "LabaMap::VarName"
+            [label="{VarName}"];
+
+        "LabaMap::VarType"
+            [label="{VarType}"];
+
+        "LabaMap::Assign"
+            [label="{Assign}"];
+
+        "LabaMap::NumValue"
+            [label="{NumValue}"];
+
+        "LabaMap::NameValue"
+            [label="{NameValue}"];
+
+        "LabaMap::OK"
+            [label="{OK}"];
+
+        "LabaMap::Error"
+            [label="{Error}"];
+
+        "%start"
+            [label="" shape=circle style=filled fillcolor=black width=0.25];
+
+        //
+        // Transitions (Edges)
+        //
+
+        "LabaMap::Start" -> "LabaMap::Line"
+            [label="num/\l"];
+
+        "LabaMap::Start" -> "LabaMap::Error"
+            [label="name/\l"];
+
+        "LabaMap::Start" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::Start" -> "LabaMap::Error"
+            [label="type/\l"];
+
+        "LabaMap::Start" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::Line" -> "LabaMap::VarType"
+            [label="type/\l"];
+
+        "LabaMap::Line" -> "LabaMap::VarName"
+            [label="name/\l"];
+
+        "LabaMap::Line" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::Line" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::Line" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::VarName" -> "LabaMap::Assign"
+            [label="asg/\l"];
+
+        "LabaMap::VarName" -> "LabaMap::OK"
+            [label="end/\l"];
+
+        "LabaMap::VarName" -> "LabaMap::Error"
+            [label="name/\l"];
+
+        "LabaMap::VarName" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::VarName" -> "LabaMap::Error"
+            [label="type/\l"];
+
+        "LabaMap::VarType" -> "LabaMap::VarName"
+            [label="name/\l"];
+
+        "LabaMap::VarType" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::VarType" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::VarType" -> "LabaMap::Error"
+            [label="type/\l"];
+
+        "LabaMap::VarType" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::Assign" -> "LabaMap::NameValue"
+            [label="name/\l"];
+
+        "LabaMap::Assign" -> "LabaMap::NumValue"
+            [label="num/\l"];
+
+        "LabaMap::Assign" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::Assign" -> "LabaMap::Error"
+            [label="type/\l"];
+
+        "LabaMap::Assign" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::NumValue" -> "LabaMap::OK"
+            [label="end/\l"];
+
+        "LabaMap::NumValue" -> "LabaMap::Error"
+            [label="name/\l"];
+
+        "LabaMap::NumValue" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::NumValue" -> "LabaMap::Error"
+            [label="type/\l"];
+
+        "LabaMap::NumValue" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::NameValue" -> "LabaMap::OK"
+            [label="end/\l"];
+
+        "LabaMap::NameValue" -> "LabaMap::Error"
+            [label="name/\l"];
+
+        "LabaMap::NameValue" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::NameValue" -> "LabaMap::Error"
+            [label="type/\l"];
+
+        "LabaMap::NameValue" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::OK" -> "LabaMap::Error"
+            [label="name/\l"];
+
+        "LabaMap::OK" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::OK" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::OK" -> "LabaMap::Error"
+            [label="type/\l"];
+
+        "LabaMap::OK" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::Error" -> "LabaMap::Error"
+            [label="name/\l"];
+
+        "LabaMap::Error" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::Error" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::Error" -> "LabaMap::Error"
+            [label="type/\l"];
+
+        "LabaMap::Error" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "%start" -> "LabaMap::Start"
+    }
+
+}

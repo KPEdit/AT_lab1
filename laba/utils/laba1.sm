@@ -1,0 +1,57 @@
+%class Laba
+%start LabaMap::Start
+%map LabaMap
+%%
+Start {
+  num(nm)
+    Line {setLine(nm);}
+}
+Line {
+  type
+    VarType {}
+  name(nm)
+    VarName {setName(nm);}
+}
+VarName {
+  asg
+    Assign {}
+  end
+    OK  {}
+}
+VarType {
+  name(nm)
+    VarName {setName(nm);}
+}
+Assign {
+  name(nm)
+    NameValue {}
+  num(nm)
+    NumValue  {}
+}
+NumValue {
+  end
+    OK  {}
+}
+NameValue {
+  end
+    OK  {}
+}
+
+OK {
+
+}
+Error {
+}
+Default {
+  name(nm)
+    Error {}
+  num(nm)
+    Error {}
+  end
+    Error {}
+  type
+    Error {}
+  asg
+    Error {}
+}
+%%
