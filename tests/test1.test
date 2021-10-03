@@ -1,0 +1,13 @@
+133 short nEw_Int = norm
+133 int neIWnt = norm
+13 val = nORMm
+asdf
+123
+123 new
+123 inat
+041 int as
+111 long kaS12
+111 long kas12 = as aASd
+222 short kva = asd
+
+^[1-9]\d*\s((int|short|long)\s)?[a-zA-Z][\da-zA-Z]{,15}(\s=\s([a-zA-Z][\da-zA-Z]{,15}|\d+))?$
