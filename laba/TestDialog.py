@@ -30,7 +30,7 @@ if __name__ == '__main__':
       with open(filePath, 'w+', encoding='UTF-8') as out:
         line = inp.readline()
         while line:
-          res = str(p[1].parse(line)) + '\n'
+          res = str(p[1].parse(line.lower())) + '\n'
           out.write(res)
           line = inp.readline()
         inp.seek(0)

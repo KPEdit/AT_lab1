@@ -45,7 +45,10 @@ class SMCParser(base.IParser):
 
   def checkNum(self, token):
     if token[0] == '0':
-      return False
+      if len(token) == 1:
+        return True
+      else:
+        return False
     for c in token:
       if not ('0' <= c <= '9'):
         return False

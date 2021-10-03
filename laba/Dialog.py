@@ -15,7 +15,7 @@ class IODialog(object):
       print("Enter strings to check")
       try:
         while True:
-          s = input()
+          s = input().lower()
           print(f"Result: {parser.parse(s)}")
       except EOFError:
         print("Good bye!")

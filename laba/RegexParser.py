@@ -1,8 +1,11 @@
 import re
 import base
 
-_PATTERN = r"^(?P<line>[1-9]\d*)\s((?P<type>int|short|long)\s)?(?P<name>[a-zA-Z][\da-zA-Z]{,15})(\s=\s(?P<value>[a-zA-Z][\da-zA-Z]{,15}|\d+))?$"
+# _PATTERN = r"^(?P<line>[1-9]\d*|0)[ \t]+((?P<type>int|short|long)[ \t]+)?(?P<name>[a-zA-Z][\da-zA-Z]{,15})[ \t]*(=[ \t]+(?P<value>[a-zA-Z][\da-zA-Z]{,15}|[1-9]\d*|0))?$"
 
+# _PATTERN = r"^(?P<line>[1-9]\d*|0)[ \t]+(((?P<type>int|short|long)[ \t]+)?(?!(short|int|long)[ \t]*$))(?P<name>[a-zA-Z][\da-zA-Z]{,15})[ \t]*(=[ \t]+(?P<value>[a-zA-Z][\da-zA-Z]{,15}|[1-9]\d*|0))?$"
+
+_PATTERN = r"^(?P<line>[1-9]\d*|0)[ \t]+(((?P<type>int|short|long)[ \t]+)?(?!(short|int|long)[ \t]*$))(?P<name>[a-zA-Z][\da-zA-Z]{,15})[ \t]*(=[ \t]+(?!(int|short|long)[ \t]*$)(?P<value>[a-zA-Z][\da-zA-Z]{,15}|[1-9]\d*|0))?$"
 
 class RegexParser(base.IParser):
   pattern: str

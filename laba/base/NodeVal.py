@@ -2,11 +2,22 @@
 class NodeVal(object):
 
   line: int
-  val: int or str
+  _val: int or str
 
-  def __init__(self, line=None, val=None) -> None:
+  @property
+  def val(self):
+    return self._val
+
+  @val.setter
+  def val(self, var: int or str):
+    if type(var) == type(''):
+      self._val = var.lower()
+    else:
+      self._val = var
+
+  def __init__(self, line=None, var=None) -> None:
     self.line = line
-    self.val = val
+    self.val = var
 
   def clear(self):
     self.line = None
