@@ -17,7 +17,7 @@ class SMCParser(base.IParser):
 
   def parse(self, inp: str, *args, **kwargs):
     self.clear()
-    tokens = inp.split()
+    tokens = inp.strip().split()
     for token in tokens:
       if self.checkType(token):
         self._fsm.type()

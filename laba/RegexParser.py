@@ -15,7 +15,7 @@ class RegexParser(base.IParser):
     self.pattern = re.compile(_PATTERN)
 
   def parse(self, inp: str, *args, **kwargs):
-    res = self.pattern.match(inp)
+    res = self.pattern.match(inp.strip())
     if res is None:
       return "Incorrect"
     end = base.NodeVal(int(res.group('line')), res.group('name'))
