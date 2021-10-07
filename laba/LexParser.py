@@ -98,7 +98,7 @@ class LexParser(base.IParser):
 
   def parse(self, inp: str, *args, **kwargs):
     self.clear()
-    self.genTokens(inp)
+    self.genTokens(inp.strip())
     res = self.check()
     if res:
       return self._node_val
