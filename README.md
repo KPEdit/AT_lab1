@@ -34,4 +34,4 @@ There are two types of a dialog mode:
 You can put several ```*.test``` files into the ```./tests``` dir and run ```make test``` to generate multiple log files in the ```./tests/logs``` dir for each parser.
 
 ## SMC graph
-![SMC_graph](laba/utils/laba1_graph.png)
+![SMC_graph](laba/utils/laba1_graph.svg)
