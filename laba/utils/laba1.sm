@@ -3,55 +3,104 @@
 %map LabaMap
 %%
 Start {
-  num(nm)
-    Line {setLine(nm);}
+  num
+    Line {addC();}
 }
 Line {
-  type
-    VarType {}
-  name(nm)
-    VarName {setName(nm);}
+  num
+    Line {addC();}
+  space
+    PreType {saveLine();}
+}
+PreType {
+  char
+    [ctxt.nameGuard()] nil {addC();}
+  num
+    [ctxt.nameGuard()] PreName {addC();}
+  space
+    [ctxt.typeGuard()] PreName {saveType();}
+  asg
+    [ctxt.nullGuard()] Error {}
+  end
+    [ctxt.nullGuard()] Error {}
+  space
+    PreAsg {saveName();}
+  asg
+    ASG {saveName();}
+  end
+    OK {saveName();}
+}
+PreName {
+  end
+    OK {saveName();}
+  asg
+    ASG {saveName();}
+  char
+    [ctxt.nameGuard()] PreName {addC();}
+  num
+    [ctxt.nameGuard()] PreName {addC();}
+  space
+    PreAsg {saveName();}
+}
+
+PreAsg {
+  asg
+    ASG {}
+}
+ASG {
+  space 
+    PreVar {}
+  num
+    VarNum {addC();}
+  char
+    [ctxt.nameGuard()] VarName {addC();}
+}
+PreVar {
+  num
+    VarNum {addC();}
+  char
+    [ctxt.nameGuard()] VarName {addC();}
+}
+VarNum {
+  num
+    VarNum {addC();}
+  end
+    OK {}
 }
 VarName {
-  asg
-    Assign {}
+  num
+    [ctxt.nameGuard()] VarName {addC();}
+  char
+    [ctxt.nameGuard()] VarName {addC();}
   end
-    OK  {}
-}
-VarType {
-  name(nm)
-    VarName {setName(nm);}
-}
-Assign {
-  name(nm)
-    NameValue {}
-  num(nm)
-    NumValue  {}
-}
-NumValue {
-  end
-    OK  {}
-}
-NameValue {
-  end
-    OK  {}
+    OK {}
 }
 
 OK {
-
 }
 Error {
-}
-Default {
-  name(nm)
+  char
     Error {}
-  num(nm)
+  num
     Error {}
   end
     Error {}
-  type
+  asg
+    Error {}
+  space
+    Error {}
+
+}
+Default {
+  char
+    Error {}
+  num
+    Error {}
+  end
     Error {}
   asg
+    Error {}
+  space
     Error {}
 }
 %%

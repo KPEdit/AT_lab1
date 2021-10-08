@@ -1,0 +1,289 @@
+%class Laba
+%start LabaMap::Start
+%map LabaMap
+%%
+Start {
+  num
+    [ctxt.nameGuard()] Line {}
+
+}
+Line {
+  num
+    [ctxt.nameGuard()] Line {}
+  space
+    PreType {saveLine();}
+}
+PreType {
+  i
+    [ctxt.nameGuard()] PreI {}
+  s
+    [ctxt.nameGuard()] PreS {}
+  l
+    [ctxt.nameGuard()] PreL {}
+}
+PreI {
+  n
+    [ctxt.nameGuard()] PreIN {}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {saveName();}
+  asg
+    ASG {saveName();}
+  end
+    OK {saveName();}
+}
+PreIN {
+  t
+    [ctxt.nameGuard()] PreINT {}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {}
+  asg
+    ASG {}
+  end
+    OK {saveName();}
+}
+PreINT {
+  space
+    PreName {setTypeInt();}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+}
+
+
+PreS {
+  h
+    PreSH {}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {}
+  asg
+    ASG {}
+  end
+    OK {saveName();}
+}
+PreSH {
+  o
+    PreSHO {}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {}
+  asg
+    ASG {}
+  end
+    OK {saveName();}
+}
+PreSHO {
+  r
+    PreSHOR {}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {}
+  asg
+    ASG {}
+  end
+    OK {saveName();}
+}
+PreSHOR {
+  t
+    PreSHORT {}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {}
+  asg
+    ASG {}
+  end
+    OK {saveName();}
+}
+PreSHORT {
+  space
+    PreName {setTypeShort();}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+}
+
+
+PreL {
+  o
+    PreLO {}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {}
+  asg
+    ASG {}
+  end
+    OK {saveName();}
+}
+PreLO {
+  n
+    PreLON {}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {}
+  asg
+    ASG {}
+  end
+    OK {saveName();}
+}
+PreLON {
+  g
+    PreLONG {}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {}
+  asg
+    ASG {}
+  end
+    OK {saveName();}
+}
+PreLONG {
+  space
+    PreName {setTypeLong();}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+}
+
+PreName {
+  end
+    OK {saveName();}
+  char
+    [ctxt.nameGuard()] PreName {}
+  num
+    [ctxt.nameGuard()] PreName {}
+  space
+    PreAsg {}
+  asg
+    ASG {}
+}
+
+OK {
+}
+PreAsg {
+  asg
+    ASG {}
+}
+ASG {
+  space 
+    PreVar {}
+  num
+    VarNum {}
+  char
+    [ctxt.nameGuard()] VarName {}
+}
+PreVar {
+  num
+    VarNum {}
+  char
+    [ctxt.nameGuard()] VarName {}
+}
+VarNum {
+  num
+    VarNum {}
+  end
+    OK {}
+}
+VarName {
+  num
+    [ctxt.nameGuard()] VarName {}
+  char
+    [ctxt.nameGuard()] VarName {}
+  end
+    OK {}
+
+}
+
+Error {
+  char
+    Error {}
+  num
+    Error {}
+  end
+    Error {}
+  asg
+    Error {}
+  space
+    Error {}
+  g
+    Error {}
+  i
+    Error {}
+  n
+    Error {}
+  t
+    Error {}
+  s
+    Error {}
+  h
+    Error {}
+  o
+    Error {}
+  r
+    Error {}
+  l
+    Error {}
+
+}
+Default {
+  char
+    Error {}
+  num
+    Error {}
+  end
+    Error {}
+  asg
+    Error {}
+  space
+    Error {}
+  g
+    Error {}
+  i
+    Error {}
+  n
+    Error {}
+  t
+    Error {}
+  s
+    Error {}
+  h
+    Error {}
+  o
+    Error {}
+  r
+    Error {}
+  l
+    Error {}
+}
+%%

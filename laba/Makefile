@@ -10,5 +10,8 @@ graph:
 graph-create:
 	dot -Tpng ./utils/laba1_sm.dot -o ./utils/laba1_graph.png
 
+graph-createsvg:
+	dot -Tsvg ./utils/laba1_sm.dot -o ./utils/laba1_graph.svg
+
 clean:
 	rm -f ./utils*_sm.*

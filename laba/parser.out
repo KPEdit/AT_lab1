@@ -1,0 +1,118 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> num
+Rule 1     num -> NUM TYPE NAME VARNAME
+Rule 2     num -> NUM TYPE NAME
+Rule 3     num -> NUM TYPE NAME VARNUM
+Rule 4     num -> NUM NAME VARNAME
+Rule 5     num -> NUM NAME
+Rule 6     num -> NUM NAME VARNUM
+
+Terminals, with rules where they appear
+
+NAME                 : 1 2 3 4 5 6
+NUM                  : 1 2 3 4 5 6
+TYPE                 : 1 2 3
+VARNAME              : 1 4
+VARNUM               : 3 6
+error                : 
+
+Nonterminals, with rules where they appear
+
+num                  : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . num
+    (1) num -> . NUM TYPE NAME VARNAME
+    (2) num -> . NUM TYPE NAME
+    (3) num -> . NUM TYPE NAME VARNUM
+    (4) num -> . NUM NAME VARNAME
+    (5) num -> . NUM NAME
+    (6) num -> . NUM NAME VARNUM
+
+    NUM             shift and go to state 2
+
+    num                            shift and go to state 1
+
+state 1
+
+    (0) S' -> num .
+
+
+
+state 2
+
+    (1) num -> NUM . TYPE NAME VARNAME
+    (2) num -> NUM . TYPE NAME
+    (3) num -> NUM . TYPE NAME VARNUM
+    (4) num -> NUM . NAME VARNAME
+    (5) num -> NUM . NAME
+    (6) num -> NUM . NAME VARNUM
+
+    TYPE            shift and go to state 3
+    NAME            shift and go to state 4
+
+
+state 3
+
+    (1) num -> NUM TYPE . NAME VARNAME
+    (2) num -> NUM TYPE . NAME
+    (3) num -> NUM TYPE . NAME VARNUM
+
+    NAME            shift and go to state 5
+
+
+state 4
+
+    (4) num -> NUM NAME . VARNAME
+    (5) num -> NUM NAME .
+    (6) num -> NUM NAME . VARNUM
+
+    VARNAME         shift and go to state 6
+    $end            reduce using rule 5 (num -> NUM NAME .)
+    VARNUM          shift and go to state 7
+
+
+state 5
+
+    (1) num -> NUM TYPE NAME . VARNAME
+    (2) num -> NUM TYPE NAME .
+    (3) num -> NUM TYPE NAME . VARNUM
+
+    VARNAME         shift and go to state 8
+    $end            reduce using rule 2 (num -> NUM TYPE NAME .)
+    VARNUM          shift and go to state 9
+
+
+state 6
+
+    (4) num -> NUM NAME VARNAME .
+
+    $end            reduce using rule 4 (num -> NUM NAME VARNAME .)
+
+
+state 7
+
+    (6) num -> NUM NAME VARNUM .
+
+    $end            reduce using rule 6 (num -> NUM NAME VARNUM .)
+
+
+state 8
+
+    (1) num -> NUM TYPE NAME VARNAME .
+
+    $end            reduce using rule 1 (num -> NUM TYPE NAME VARNAME .)
+
+
+state 9
+
+    (3) num -> NUM TYPE NAME VARNUM .
+
+    $end            reduce using rule 3 (num -> NUM TYPE NAME VARNUM .)
+

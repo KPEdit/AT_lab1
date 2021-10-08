@@ -8,7 +8,7 @@ class IParser(abc.ABC):
     self._node_val = NodeVal()
 
   @abc.abstractmethod
-  def parse(self, inp: str, *args, **kwargs):
+  def parse(self, inp: str, *args, **kwargs) -> NodeVal:
     pass
 
   def clear(self):

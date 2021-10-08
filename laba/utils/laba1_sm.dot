@@ -17,20 +17,26 @@ digraph laba1 {
         "LabaMap::Line"
             [label="{Line}"];
 
+        "LabaMap::PreType"
+            [label="{PreType}"];
+
+        "LabaMap::PreName"
+            [label="{PreName}"];
+
+        "LabaMap::PreAsg"
+            [label="{PreAsg}"];
+
+        "LabaMap::ASG"
+            [label="{ASG}"];
+
+        "LabaMap::PreVar"
+            [label="{PreVar}"];
+
+        "LabaMap::VarNum"
+            [label="{VarNum}"];
+
         "LabaMap::VarName"
             [label="{VarName}"];
-
-        "LabaMap::VarType"
-            [label="{VarType}"];
-
-        "LabaMap::Assign"
-            [label="{Assign}"];
-
-        "LabaMap::NumValue"
-            [label="{NumValue}"];
-
-        "LabaMap::NameValue"
-            [label="{NameValue}"];
 
         "LabaMap::OK"
             [label="{OK}"];
@@ -49,109 +55,169 @@ digraph laba1 {
             [label="num/\l"];
 
         "LabaMap::Start" -> "LabaMap::Error"
-            [label="name/\l"];
+            [label="char/\l"];
 
         "LabaMap::Start" -> "LabaMap::Error"
             [label="end/\l"];
 
         "LabaMap::Start" -> "LabaMap::Error"
-            [label="type/\l"];
-
-        "LabaMap::Start" -> "LabaMap::Error"
             [label="asg/\l"];
 
-        "LabaMap::Line" -> "LabaMap::VarType"
-            [label="type/\l"];
+        "LabaMap::Start" -> "LabaMap::Error"
+            [label="space/\l"];
 
-        "LabaMap::Line" -> "LabaMap::VarName"
-            [label="name/\l"];
-
-        "LabaMap::Line" -> "LabaMap::Error"
+        "LabaMap::Line" -> "LabaMap::Line"
             [label="num/\l"];
 
+        "LabaMap::Line" -> "LabaMap::PreType"
+            [label="space/\l"];
+
+        "LabaMap::Line" -> "LabaMap::Error"
+            [label="char/\l"];
+
         "LabaMap::Line" -> "LabaMap::Error"
             [label="end/\l"];
 
         "LabaMap::Line" -> "LabaMap::Error"
             [label="asg/\l"];
 
-        "LabaMap::VarName" -> "LabaMap::Assign"
+        "LabaMap::PreType" -> "LabaMap::PreName"
+            [label="num/\l"];
+
+        "LabaMap::PreType" -> "LabaMap::PreName"
+            [label="space/\l"];
+
+        "LabaMap::PreType" -> "LabaMap::PreAsg"
+            [label="space/\l"];
+
+        "LabaMap::PreType" -> "LabaMap::Error"
             [label="asg/\l"];
+
+        "LabaMap::PreType" -> "LabaMap::ASG"
+            [label="asg/\l"];
+
+        "LabaMap::PreType" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::PreType" -> "LabaMap::OK"
+            [label="end/\l"];
+
+        "LabaMap::PreType" -> "LabaMap::Error"
+            [label="char/\l"];
+
+        "LabaMap::PreType" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::PreName" -> "LabaMap::OK"
+            [label="end/\l"];
+
+        "LabaMap::PreName" -> "LabaMap::ASG"
+            [label="asg/\l"];
+
+        "LabaMap::PreName" -> "LabaMap::PreName"
+            [label="char/\l"];
+
+        "LabaMap::PreName" -> "LabaMap::PreName"
+            [label="num/\l"];
+
+        "LabaMap::PreName" -> "LabaMap::PreAsg"
+            [label="space/\l"];
+
+        "LabaMap::PreName" -> "LabaMap::Error"
+            [label="char/\l"];
+
+        "LabaMap::PreName" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::PreAsg" -> "LabaMap::ASG"
+            [label="asg/\l"];
+
+        "LabaMap::PreAsg" -> "LabaMap::Error"
+            [label="char/\l"];
+
+        "LabaMap::PreAsg" -> "LabaMap::Error"
+            [label="num/\l"];
+
+        "LabaMap::PreAsg" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::PreAsg" -> "LabaMap::Error"
+            [label="space/\l"];
+
+        "LabaMap::ASG" -> "LabaMap::PreVar"
+            [label="space/\l"];
+
+        "LabaMap::ASG" -> "LabaMap::VarNum"
+            [label="num/\l"];
+
+        "LabaMap::ASG" -> "LabaMap::VarName"
+            [label="char/\l"];
+
+        "LabaMap::ASG" -> "LabaMap::Error"
+            [label="char/\l"];
+
+        "LabaMap::ASG" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::ASG" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::PreVar" -> "LabaMap::VarNum"
+            [label="num/\l"];
+
+        "LabaMap::PreVar" -> "LabaMap::VarName"
+            [label="char/\l"];
+
+        "LabaMap::PreVar" -> "LabaMap::Error"
+            [label="char/\l"];
+
+        "LabaMap::PreVar" -> "LabaMap::Error"
+            [label="end/\l"];
+
+        "LabaMap::PreVar" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::PreVar" -> "LabaMap::Error"
+            [label="space/\l"];
+
+        "LabaMap::VarNum" -> "LabaMap::VarNum"
+            [label="num/\l"];
+
+        "LabaMap::VarNum" -> "LabaMap::OK"
+            [label="end/\l"];
+
+        "LabaMap::VarNum" -> "LabaMap::Error"
+            [label="char/\l"];
+
+        "LabaMap::VarNum" -> "LabaMap::Error"
+            [label="asg/\l"];
+
+        "LabaMap::VarNum" -> "LabaMap::Error"
+            [label="space/\l"];
+
+        "LabaMap::VarName" -> "LabaMap::VarName"
+            [label="num/\l"];
+
+        "LabaMap::VarName" -> "LabaMap::VarName"
+            [label="char/\l"];
 
         "LabaMap::VarName" -> "LabaMap::OK"
             [label="end/\l"];
 
         "LabaMap::VarName" -> "LabaMap::Error"
-            [label="name/\l"];
+            [label="char/\l"];
 
         "LabaMap::VarName" -> "LabaMap::Error"
             [label="num/\l"];
 
         "LabaMap::VarName" -> "LabaMap::Error"
-            [label="type/\l"];
-
-        "LabaMap::VarType" -> "LabaMap::VarName"
-            [label="name/\l"];
-
-        "LabaMap::VarType" -> "LabaMap::Error"
-            [label="num/\l"];
-
-        "LabaMap::VarType" -> "LabaMap::Error"
-            [label="end/\l"];
-
-        "LabaMap::VarType" -> "LabaMap::Error"
-            [label="type/\l"];
-
-        "LabaMap::VarType" -> "LabaMap::Error"
             [label="asg/\l"];
 
-        "LabaMap::Assign" -> "LabaMap::NameValue"
-            [label="name/\l"];
-
-        "LabaMap::Assign" -> "LabaMap::NumValue"
-            [label="num/\l"];
-
-        "LabaMap::Assign" -> "LabaMap::Error"
-            [label="end/\l"];
-
-        "LabaMap::Assign" -> "LabaMap::Error"
-            [label="type/\l"];
-
-        "LabaMap::Assign" -> "LabaMap::Error"
-            [label="asg/\l"];
-
-        "LabaMap::NumValue" -> "LabaMap::OK"
-            [label="end/\l"];
-
-        "LabaMap::NumValue" -> "LabaMap::Error"
-            [label="name/\l"];
-
-        "LabaMap::NumValue" -> "LabaMap::Error"
-            [label="num/\l"];
-
-        "LabaMap::NumValue" -> "LabaMap::Error"
-            [label="type/\l"];
-
-        "LabaMap::NumValue" -> "LabaMap::Error"
-            [label="asg/\l"];
-
-        "LabaMap::NameValue" -> "LabaMap::OK"
-            [label="end/\l"];
-
-        "LabaMap::NameValue" -> "LabaMap::Error"
-            [label="name/\l"];
-
-        "LabaMap::NameValue" -> "LabaMap::Error"
-            [label="num/\l"];
-
-        "LabaMap::NameValue" -> "LabaMap::Error"
-            [label="type/\l"];
-
-        "LabaMap::NameValue" -> "LabaMap::Error"
-            [label="asg/\l"];
+        "LabaMap::VarName" -> "LabaMap::Error"
+            [label="space/\l"];
 
         "LabaMap::OK" -> "LabaMap::Error"
-            [label="name/\l"];
+            [label="char/\l"];
 
         "LabaMap::OK" -> "LabaMap::Error"
             [label="num/\l"];
@@ -160,13 +226,13 @@ digraph laba1 {
             [label="end/\l"];
 
         "LabaMap::OK" -> "LabaMap::Error"
-            [label="type/\l"];
-
-        "LabaMap::OK" -> "LabaMap::Error"
             [label="asg/\l"];
 
+        "LabaMap::OK" -> "LabaMap::Error"
+            [label="space/\l"];
+
         "LabaMap::Error" -> "LabaMap::Error"
-            [label="name/\l"];
+            [label="char/\l"];
 
         "LabaMap::Error" -> "LabaMap::Error"
             [label="num/\l"];
@@ -175,10 +241,10 @@ digraph laba1 {
             [label="end/\l"];
 
         "LabaMap::Error" -> "LabaMap::Error"
-            [label="type/\l"];
+            [label="asg/\l"];
 
         "LabaMap::Error" -> "LabaMap::Error"
-            [label="asg/\l"];
+            [label="space/\l"];
 
         "%start" -> "LabaMap::Start"
     }

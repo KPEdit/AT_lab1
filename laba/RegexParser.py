@@ -1,11 +1,7 @@
 import re
 import base
 
-# _PATTERN = r"^(?P<line>[1-9]\d*|0)[ \t]+((?P<type>int|short|long)[ \t]+)?(?P<name>[a-zA-Z][\da-zA-Z]{,15})[ \t]*(=[ \t]+(?P<value>[a-zA-Z][\da-zA-Z]{,15}|[1-9]\d*|0))?$"
-
-# _PATTERN = r"^(?P<line>[1-9]\d*|0)[ \t]+(((?P<type>int|short|long)[ \t]+)?(?!(short|int|long)[ \t]*$))(?P<name>[a-zA-Z][\da-zA-Z]{,15})[ \t]*(=[ \t]+(?P<value>[a-zA-Z][\da-zA-Z]{,15}|[1-9]\d*|0))?$"
-
-_PATTERN = r"^(?P<line>[1-9]\d*|0)[ \t]+(((?P<type>int|short|long)[ \t]+)?(?!(short|int|long)[ \t]*$))(?P<name>[a-zA-Z][\da-zA-Z]{,15})[ \t]*(=[ \t]+(?!(int|short|long)[ \t]*$)(?P<value>[a-zA-Z][\da-zA-Z]{,15}|[1-9]\d*|0))?$"
+_PATTERN = r"(?P<line>\d+)[ \t]+((?P<type>int|short|long)[ \t]+)?(?P<name>[a-zA-Z][a-zA-Z\d]{,15})([ \t]*=[ \t]*([a-zA-Z][a-zA-Z\d]{,15}|\d+))?[ \t]*$"
 
 class RegexParser(base.IParser):
   pattern: str
@@ -15,8 +11,13 @@ class RegexParser(base.IParser):
     self.pattern = re.compile(_PATTERN)
 
   def parse(self, inp: str, *args, **kwargs):
-    res = self.pattern.match(inp.strip())
+    res = self.pattern.match(inp.lower().strip())
     if res is None:
-      return "Incorrect"
-    end = base.NodeVal(int(res.group('line')), res.group('name'))
+      return base.NodeVal()
+    end = base.NodeVal(res.group('line'), res.group('name'), type_=res.group('type'))
     return end
+
+if __name__ == '__main__':
+  m = RegexParser()
+  test = '4232760391926351 \t\t\t\tshort \t  ai  = kw'
+  print(m.parse(test))

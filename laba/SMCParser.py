@@ -3,9 +3,12 @@ from utils import laba1_sm
 
 class SMCParser(base.IParser):
 
-  __TYPES = {'int', 'short', 'long'}
   __NUMS = '1234567890'
   __STRS = 'qwertyuiopasdfghjklzxcvbnm'
+  __TYPES = {'int', 'short', 'long'}
+  _batch = ''
+  _saved = []
+  _c: str
   
   def __init__(self):
     super().__init__()
@@ -14,59 +17,65 @@ class SMCParser(base.IParser):
   def clear(self):
     super().clear()
     self._fsm.setState(laba1_sm.LabaMap.Start)
+    self._batch = ''
+
+  @staticmethod
+  def normStr(s: str):
+    return ' '.join(s.split()).lower()
 
   def parse(self, inp: str, *args, **kwargs):
     self.clear()
-    tokens = inp.strip().split()
-    for token in tokens:
-      if self.checkType(token):
-        self._fsm.type()
-      elif self.checkNum(token):
-        self._fsm.num(token)
-      elif self.checkName(token):
-        self._fsm.name(token)
-      elif self.checkAsign(token):
+    prev = []
+    for self._c in self.normStr(inp):
+      prev.append(type(self._fsm.getState()))
+      if self._c in self.__STRS:
+        self._fsm.char()
+      elif self._c in self.__NUMS:
+        self._fsm.num()
+      elif self._c == ' ':
+        self._fsm.space()
+      elif self._c == '=':
         self._fsm.asg()
       else:
         self._fsm.end()
     self._fsm.end()
     if type(self._fsm.getState()) is laba1_sm.LabaMap_OK:
+      if len(self._saved) == 2:
+        self._node_val.type = self._saved.pop(0)
+      self._node_val.val = self._saved.pop()
       return self._node_val
-    return "Incorrect"
+    return self._node_val.clear()
 
-  def setLine(self, line):
-    self._node_val.line = line
+  def restoreBatch(self):
+    self._batch = ''
 
-  def setName(self, name):
-    self._node_val.val = name
+  def nameGuard(self):
+    return len(self._batch) <= 16
 
-  def checkType(self, token):
-    return token in self.__TYPES
+  def typeGuard(self):
+    return self._batch in self.__TYPES
 
-  def checkNum(self, token):
-    if token[0] == '0':
-      if len(token) == 1:
-        return True
-      else:
-        return False
-    for c in token:
-      if not ('0' <= c <= '9'):
-        return False
-    return True
+  def nullGuard(self):
+    return len(self._batch) == 0
 
-  def checkName(self, token: str):
-    if len(token) > 16:
-      return False
-    token = token.lower()
-    if not token[0] in self.__STRS:
-      return False
-    for c in token[1:]:
-      if not (c in self.__NUMS or c in self.__STRS):
-        return False
-    return True
+  def addC(self):
+    self._batch += self._c
 
-  def checkAsign(self, token):
-    return token == '='
+  def saveName(self):
+    if self._batch != '':
+      self._saved.append(self._batch)
+    self.restoreBatch()
+
+  def saveLine(self):
+    self._node_val.line = self._batch
+    self.restoreBatch()
+
+  def saveType(self):
+    self._saved.append(self._batch)
+    self.restoreBatch()
+
+if __name__ == '__main__':
+  m = SMCParser()
+  test = '768 as = short'
+  print(m.parse(test))
   
-  def go_to_Default(self):
-    pass
