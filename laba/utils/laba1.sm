@@ -20,9 +20,9 @@ PreType {
   space
     [ctxt.typeGuard()] PreName {saveType();}
   asg
-    [ctxt.nullGuard()] Error {}
+    [ctxt.nullGuard()] Error {stop();}
   end
-    [ctxt.nullGuard()] Error {}
+    [ctxt.nullGuard()] Error {stop();}
   space
     PreAsg {saveName();}
   asg
@@ -80,27 +80,27 @@ OK {
 }
 Error {
   char
-    Error {}
+    Error {stop();}
   num
-    Error {}
+    Error {stop();}
   end
-    Error {}
+    Error {stop();}
   asg
-    Error {}
+    Error {stop();}
   space
-    Error {}
+    Error {stop();}
 
 }
 Default {
   char
-    Error {}
+    Error {stop();}
   num
-    Error {}
+    Error {stop();}
   end
-    Error {}
+    Error {stop();}
   asg
-    Error {}
+    Error {stop();}
   space
-    Error {}
+    Error {stop();}
 }
 %%

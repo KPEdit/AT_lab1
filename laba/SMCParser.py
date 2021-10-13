@@ -8,6 +8,7 @@ class SMCParser(base.IParser):
   __TYPES = {'int', 'short', 'long'}
   _batch = ''
   _saved = []
+  _STOP = False
   _c: str
   
   def __init__(self):
@@ -17,6 +18,7 @@ class SMCParser(base.IParser):
   def clear(self):
     super().clear()
     self._fsm.setState(laba1_sm.LabaMap.Start)
+    self._STOP = False
     self._batch = ''
 
   @staticmethod
@@ -25,9 +27,9 @@ class SMCParser(base.IParser):
 
   def parse(self, inp: str, *args, **kwargs):
     self.clear()
-    prev = []
     for self._c in self.normStr(inp):
-      prev.append(type(self._fsm.getState()))
+      if self._STOP:
+        break
       if self._c in self.__STRS:
         self._fsm.char()
       elif self._c in self.__NUMS:
@@ -73,6 +75,9 @@ class SMCParser(base.IParser):
   def saveType(self):
     self._saved.append(self._batch)
     self.restoreBatch()
+
+  def stop(self):
+    self._STOP = True
 
 if __name__ == '__main__':
   m = SMCParser()
