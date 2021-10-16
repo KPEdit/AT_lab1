@@ -11,10 +11,10 @@ class RegexParser(base.IParser):
     self.pattern = re.compile(_PATTERN)
 
   def parse(self, inp: str, *args, **kwargs):
-    res = self.pattern.match(inp.lower().strip())
+    res = self.pattern.match(inp)
     if res is None:
       return base.NodeVal()
-    end = base.NodeVal(res.group('line'), res.group('name'), type_=res.group('type'))
+    end = base.NodeVal(res.group('line'), res.group('name').lower(), type_=res.group('type'))
     return end
 
 if __name__ == '__main__':

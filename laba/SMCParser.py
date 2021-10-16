@@ -4,8 +4,9 @@ from utils import laba1_sm
 class SMCParser(base.IParser):
 
   __NUMS = '1234567890'
-  __STRS = 'qwertyuiopasdfghjklzxcvbnm'
+  __STRS = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
   __TYPES = {'int', 'short', 'long'}
+  __SPACES = ' \t'
   _batch = ''
   _saved = []
   _STOP = False
@@ -21,20 +22,16 @@ class SMCParser(base.IParser):
     self._STOP = False
     self._batch = ''
 
-  @staticmethod
-  def normStr(s: str):
-    return ' '.join(s.split()).lower()
-
   def parse(self, inp: str, *args, **kwargs):
     self.clear()
-    for self._c in self.normStr(inp):
+    for self._c in inp:
       if self._STOP:
         break
       if self._c in self.__STRS:
         self._fsm.char()
       elif self._c in self.__NUMS:
         self._fsm.num()
-      elif self._c == ' ':
+      elif self._c in self.__SPACES:
         self._fsm.space()
       elif self._c == '=':
         self._fsm.asg()
@@ -43,8 +40,8 @@ class SMCParser(base.IParser):
     self._fsm.end()
     if type(self._fsm.getState()) is laba1_sm.LabaMap_OK:
       if len(self._saved) == 2:
-        self._node_val.type = self._saved.pop(0)
-      self._node_val.val = self._saved.pop()
+        self._node_val.type = self._saved.pop(0).lower()
+      self._node_val.val = self._saved.pop().lower()
       return self._node_val
     return self._node_val.clear()
 
@@ -81,6 +78,6 @@ class SMCParser(base.IParser):
 
 if __name__ == '__main__':
   m = SMCParser()
-  test = '768 as = short'
+  test = '4  			CxKAwuT22Na   	=	  	 923388319'
   print(m.parse(test))
   

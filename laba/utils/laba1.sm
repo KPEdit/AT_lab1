@@ -10,7 +10,13 @@ Line {
   num
     Line {addC();}
   space
-    PreType {saveLine();}
+    PreTypeSpace {saveLine();}
+}
+PreTypeSpace {
+  space
+    PreTypeSpace {}
+  char
+    PreType {addC();}
 }
 PreType {
   char
@@ -18,17 +24,25 @@ PreType {
   num
     [ctxt.nameGuard()] PreName {addC();}
   space
-    [ctxt.typeGuard()] PreName {saveType();}
+    [ctxt.typeGuard()] PreNameSpace {saveType();}
   asg
     [ctxt.nullGuard()] Error {stop();}
   end
     [ctxt.nullGuard()] Error {stop();}
   space
-    PreAsg {saveName();}
+    PreAsgSpace {saveName();}
   asg
     ASG {saveName();}
   end
     OK {saveName();}
+}
+PreNameSpace {
+  space
+    PreNameSpace {}
+  char
+    PreName {addC();}
+  asg
+    ASG {}
 }
 PreName {
   end
@@ -40,20 +54,29 @@ PreName {
   num
     [ctxt.nameGuard()] PreName {addC();}
   space
-    PreAsg {saveName();}
+    PreAsgSpace {saveName();}
 }
-
-PreAsg {
+PreAsgSpace {
+  space
+    PreAsgSpace {}
   asg
     ASG {}
 }
 ASG {
   space 
-    PreVar {}
+    PreVarSpace {}
   num
     VarNum {addC();}
   char
     [ctxt.nameGuard()] VarName {addC();}
+}
+PreVarSpace {
+  space
+    PreVarSpace {}
+  char
+    [ctxt.nameGuard()] VarName {addC();}
+  num
+    VarNum {addC();}
 }
 PreVar {
   num

@@ -17,17 +17,26 @@ digraph laba1 {
         "LabaMap::Line"
             [label="{Line}"];
 
+        "LabaMap::PreTypeSpace"
+            [label="{PreTypeSpace}"];
+
         "LabaMap::PreType"
-            [label="{PreType}"];
+            [label="{PreType|char()\l\[ctxt.nameGuard()\]/\l&nbsp;&nbsp;&nbsp;addC();\l}"];
+
+        "LabaMap::PreNameSpace"
+            [label="{PreNameSpace}"];
 
         "LabaMap::PreName"
             [label="{PreName}"];
 
-        "LabaMap::PreAsg"
-            [label="{PreAsg}"];
+        "LabaMap::PreAsgSpace"
+            [label="{PreAsgSpace}"];
 
         "LabaMap::ASG"
             [label="{ASG}"];
+
+        "LabaMap::PreVarSpace"
+            [label="{PreVarSpace}"];
 
         "LabaMap::PreVar"
             [label="{PreVar}"];
@@ -42,7 +51,7 @@ digraph laba1 {
             [label="{OK}"];
 
         "LabaMap::Error"
-            [label="{Error}"];
+            [label="{Error|char()/\l&nbsp;&nbsp;&nbsp;stop();\lnum()/\l&nbsp;&nbsp;&nbsp;stop();\lend()/\l&nbsp;&nbsp;&nbsp;stop();\lasg()/\l&nbsp;&nbsp;&nbsp;stop();\lspace()/\l&nbsp;&nbsp;&nbsp;stop();\l}"];
 
         "%start"
             [label="" shape=circle style=filled fillcolor=black width=0.25];
@@ -52,199 +61,232 @@ digraph laba1 {
         //
 
         "LabaMap::Start" -> "LabaMap::Line"
-            [label="num/\l"];
+            [label="num()/\laddC();\l"];
 
         "LabaMap::Start" -> "LabaMap::Error"
-            [label="char/\l"];
+            [label="char()/\lstop();\l"];
 
         "LabaMap::Start" -> "LabaMap::Error"
-            [label="end/\l"];
+            [label="end()/\lstop();\l"];
 
         "LabaMap::Start" -> "LabaMap::Error"
-            [label="asg/\l"];
+            [label="asg()/\lstop();\l"];
 
         "LabaMap::Start" -> "LabaMap::Error"
-            [label="space/\l"];
+            [label="space()/\lstop();\l"];
 
         "LabaMap::Line" -> "LabaMap::Line"
-            [label="num/\l"];
+            [label="num()/\laddC();\l"];
 
-        "LabaMap::Line" -> "LabaMap::PreType"
-            [label="space/\l"];
-
-        "LabaMap::Line" -> "LabaMap::Error"
-            [label="char/\l"];
+        "LabaMap::Line" -> "LabaMap::PreTypeSpace"
+            [label="space()/\lsaveLine();\l"];
 
         "LabaMap::Line" -> "LabaMap::Error"
-            [label="end/\l"];
+            [label="char()/\lstop();\l"];
 
         "LabaMap::Line" -> "LabaMap::Error"
-            [label="asg/\l"];
+            [label="end()/\lstop();\l"];
+
+        "LabaMap::Line" -> "LabaMap::Error"
+            [label="asg()/\lstop();\l"];
+
+        "LabaMap::PreTypeSpace" -> "LabaMap::PreTypeSpace"
+            [label="space()/\l"];
+
+        "LabaMap::PreTypeSpace" -> "LabaMap::PreType"
+            [label="char()/\laddC();\l"];
+
+        "LabaMap::PreTypeSpace" -> "LabaMap::Error"
+            [label="num()/\lstop();\l"];
+
+        "LabaMap::PreTypeSpace" -> "LabaMap::Error"
+            [label="end()/\lstop();\l"];
+
+        "LabaMap::PreTypeSpace" -> "LabaMap::Error"
+            [label="asg()/\lstop();\l"];
 
         "LabaMap::PreType" -> "LabaMap::PreName"
-            [label="num/\l"];
+            [label="num()\l\[ctxt.nameGuard()\]/\laddC();\l"];
 
-        "LabaMap::PreType" -> "LabaMap::PreName"
-            [label="space/\l"];
+        "LabaMap::PreType" -> "LabaMap::PreNameSpace"
+            [label="space()\l\[ctxt.typeGuard()\]/\lsaveType();\l"];
 
-        "LabaMap::PreType" -> "LabaMap::PreAsg"
-            [label="space/\l"];
+        "LabaMap::PreType" -> "LabaMap::PreAsgSpace"
+            [label="space()/\lsaveName();\l"];
 
         "LabaMap::PreType" -> "LabaMap::Error"
-            [label="asg/\l"];
+            [label="asg()\l\[ctxt.nullGuard()\]/\lstop();\l"];
 
         "LabaMap::PreType" -> "LabaMap::ASG"
-            [label="asg/\l"];
+            [label="asg()/\lsaveName();\l"];
 
         "LabaMap::PreType" -> "LabaMap::Error"
-            [label="end/\l"];
+            [label="end()\l\[ctxt.nullGuard()\]/\lstop();\l"];
 
         "LabaMap::PreType" -> "LabaMap::OK"
-            [label="end/\l"];
+            [label="end()/\lsaveName();\l"];
 
         "LabaMap::PreType" -> "LabaMap::Error"
-            [label="char/\l"];
+            [label="char()/\lstop();\l"];
 
         "LabaMap::PreType" -> "LabaMap::Error"
-            [label="num/\l"];
+            [label="num()/\lstop();\l"];
+
+        "LabaMap::PreNameSpace" -> "LabaMap::PreNameSpace"
+            [label="space()/\l"];
+
+        "LabaMap::PreNameSpace" -> "LabaMap::PreName"
+            [label="char()/\laddC();\l"];
+
+        "LabaMap::PreNameSpace" -> "LabaMap::ASG"
+            [label="asg()/\l"];
+
+        "LabaMap::PreNameSpace" -> "LabaMap::Error"
+            [label="num()/\lstop();\l"];
+
+        "LabaMap::PreNameSpace" -> "LabaMap::Error"
+            [label="end()/\lstop();\l"];
 
         "LabaMap::PreName" -> "LabaMap::OK"
-            [label="end/\l"];
+            [label="end()/\lsaveName();\l"];
 
         "LabaMap::PreName" -> "LabaMap::ASG"
-            [label="asg/\l"];
+            [label="asg()/\lsaveName();\l"];
 
         "LabaMap::PreName" -> "LabaMap::PreName"
-            [label="char/\l"];
+            [label="char()\l\[ctxt.nameGuard()\]/\laddC();\l"];
 
         "LabaMap::PreName" -> "LabaMap::PreName"
-            [label="num/\l"];
+            [label="num()\l\[ctxt.nameGuard()\]/\laddC();\l"];
 
-        "LabaMap::PreName" -> "LabaMap::PreAsg"
-            [label="space/\l"];
-
-        "LabaMap::PreName" -> "LabaMap::Error"
-            [label="char/\l"];
+        "LabaMap::PreName" -> "LabaMap::PreAsgSpace"
+            [label="space()/\lsaveName();\l"];
 
         "LabaMap::PreName" -> "LabaMap::Error"
-            [label="num/\l"];
+            [label="char()/\lstop();\l"];
 
-        "LabaMap::PreAsg" -> "LabaMap::ASG"
-            [label="asg/\l"];
+        "LabaMap::PreName" -> "LabaMap::Error"
+            [label="num()/\lstop();\l"];
 
-        "LabaMap::PreAsg" -> "LabaMap::Error"
-            [label="char/\l"];
+        "LabaMap::PreAsgSpace" -> "LabaMap::PreAsgSpace"
+            [label="space()/\l"];
 
-        "LabaMap::PreAsg" -> "LabaMap::Error"
-            [label="num/\l"];
+        "LabaMap::PreAsgSpace" -> "LabaMap::ASG"
+            [label="asg()/\l"];
 
-        "LabaMap::PreAsg" -> "LabaMap::Error"
-            [label="end/\l"];
+        "LabaMap::PreAsgSpace" -> "LabaMap::Error"
+            [label="char()/\lstop();\l"];
 
-        "LabaMap::PreAsg" -> "LabaMap::Error"
-            [label="space/\l"];
+        "LabaMap::PreAsgSpace" -> "LabaMap::Error"
+            [label="num()/\lstop();\l"];
 
-        "LabaMap::ASG" -> "LabaMap::PreVar"
-            [label="space/\l"];
+        "LabaMap::PreAsgSpace" -> "LabaMap::Error"
+            [label="end()/\lstop();\l"];
+
+        "LabaMap::ASG" -> "LabaMap::PreVarSpace"
+            [label="space()/\l"];
 
         "LabaMap::ASG" -> "LabaMap::VarNum"
-            [label="num/\l"];
+            [label="num()/\laddC();\l"];
 
         "LabaMap::ASG" -> "LabaMap::VarName"
-            [label="char/\l"];
+            [label="char()\l\[ctxt.nameGuard()\]/\laddC();\l"];
 
         "LabaMap::ASG" -> "LabaMap::Error"
-            [label="char/\l"];
+            [label="char()/\lstop();\l"];
 
         "LabaMap::ASG" -> "LabaMap::Error"
-            [label="end/\l"];
+            [label="end()/\lstop();\l"];
 
         "LabaMap::ASG" -> "LabaMap::Error"
-            [label="asg/\l"];
+            [label="asg()/\lstop();\l"];
+
+        "LabaMap::PreVarSpace" -> "LabaMap::PreVarSpace"
+            [label="space()/\l"];
+
+        "LabaMap::PreVarSpace" -> "LabaMap::VarName"
+            [label="char()\l\[ctxt.nameGuard()\]/\laddC();\l"];
+
+        "LabaMap::PreVarSpace" -> "LabaMap::VarNum"
+            [label="num()/\laddC();\l"];
+
+        "LabaMap::PreVarSpace" -> "LabaMap::Error"
+            [label="char()/\lstop();\l"];
+
+        "LabaMap::PreVarSpace" -> "LabaMap::Error"
+            [label="end()/\lstop();\l"];
+
+        "LabaMap::PreVarSpace" -> "LabaMap::Error"
+            [label="asg()/\lstop();\l"];
 
         "LabaMap::PreVar" -> "LabaMap::VarNum"
-            [label="num/\l"];
+            [label="num()/\laddC();\l"];
 
         "LabaMap::PreVar" -> "LabaMap::VarName"
-            [label="char/\l"];
+            [label="char()\l\[ctxt.nameGuard()\]/\laddC();\l"];
 
         "LabaMap::PreVar" -> "LabaMap::Error"
-            [label="char/\l"];
+            [label="char()/\lstop();\l"];
 
         "LabaMap::PreVar" -> "LabaMap::Error"
-            [label="end/\l"];
+            [label="end()/\lstop();\l"];
 
         "LabaMap::PreVar" -> "LabaMap::Error"
-            [label="asg/\l"];
+            [label="asg()/\lstop();\l"];
 
         "LabaMap::PreVar" -> "LabaMap::Error"
-            [label="space/\l"];
+            [label="space()/\lstop();\l"];
 
         "LabaMap::VarNum" -> "LabaMap::VarNum"
-            [label="num/\l"];
+            [label="num()/\laddC();\l"];
 
         "LabaMap::VarNum" -> "LabaMap::OK"
-            [label="end/\l"];
+            [label="end()/\l"];
 
         "LabaMap::VarNum" -> "LabaMap::Error"
-            [label="char/\l"];
+            [label="char()/\lstop();\l"];
 
         "LabaMap::VarNum" -> "LabaMap::Error"
-            [label="asg/\l"];
+            [label="asg()/\lstop();\l"];
 
         "LabaMap::VarNum" -> "LabaMap::Error"
-            [label="space/\l"];
+            [label="space()/\lstop();\l"];
 
         "LabaMap::VarName" -> "LabaMap::VarName"
-            [label="num/\l"];
+            [label="num()\l\[ctxt.nameGuard()\]/\laddC();\l"];
 
         "LabaMap::VarName" -> "LabaMap::VarName"
-            [label="char/\l"];
+            [label="char()\l\[ctxt.nameGuard()\]/\laddC();\l"];
 
         "LabaMap::VarName" -> "LabaMap::OK"
-            [label="end/\l"];
+            [label="end()/\l"];
 
         "LabaMap::VarName" -> "LabaMap::Error"
-            [label="char/\l"];
+            [label="char()/\lstop();\l"];
 
         "LabaMap::VarName" -> "LabaMap::Error"
-            [label="num/\l"];
+            [label="num()/\lstop();\l"];
 
         "LabaMap::VarName" -> "LabaMap::Error"
-            [label="asg/\l"];
+            [label="asg()/\lstop();\l"];
 
         "LabaMap::VarName" -> "LabaMap::Error"
-            [label="space/\l"];
+            [label="space()/\lstop();\l"];
 
         "LabaMap::OK" -> "LabaMap::Error"
-            [label="char/\l"];
+            [label="char()/\lstop();\l"];
 
         "LabaMap::OK" -> "LabaMap::Error"
-            [label="num/\l"];
+            [label="num()/\lstop();\l"];
 
         "LabaMap::OK" -> "LabaMap::Error"
-            [label="end/\l"];
+            [label="end()/\lstop();\l"];
 
         "LabaMap::OK" -> "LabaMap::Error"
-            [label="asg/\l"];
+            [label="asg()/\lstop();\l"];
 
         "LabaMap::OK" -> "LabaMap::Error"
-            [label="space/\l"];
-
-        "LabaMap::Error" -> "LabaMap::Error"
-            [label="char/\l"];
-
-        "LabaMap::Error" -> "LabaMap::Error"
-            [label="num/\l"];
-
-        "LabaMap::Error" -> "LabaMap::Error"
-            [label="end/\l"];
-
-        "LabaMap::Error" -> "LabaMap::Error"
-            [label="asg/\l"];
-
-        "LabaMap::Error" -> "LabaMap::Error"
-            [label="space/\l"];
+            [label="space()/\lstop();\l"];
 
         "%start" -> "LabaMap::Start"
     }

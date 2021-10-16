@@ -124,8 +124,27 @@ class LabaMap_Line(LabaMap_Default):
         try:
             ctxt.saveLine()
         finally:
+            fsm.setState(LabaMap.PreTypeSpace)
+            fsm.getState().Entry(fsm)
+
+
+class LabaMap_PreTypeSpace(LabaMap_Default):
+
+    def char(self, fsm):
+        ctxt = fsm.getOwner()
+        fsm.getState().Exit(fsm)
+        fsm.clearState()
+        try:
+            ctxt.addC()
+        finally:
             fsm.setState(LabaMap.PreType)
             fsm.getState().Entry(fsm)
+
+
+    def space(self, fsm):
+        fsm.getState().Exit(fsm)
+        fsm.setState(LabaMap.PreTypeSpace)
+        fsm.getState().Entry(fsm)
 
 
 class LabaMap_PreType(LabaMap_Default):
@@ -203,7 +222,7 @@ class LabaMap_PreType(LabaMap_Default):
             try:
                 ctxt.saveType()
             finally:
-                fsm.setState(LabaMap.PreName)
+                fsm.setState(LabaMap.PreNameSpace)
                 fsm.getState().Entry(fsm)
         else:
             fsm.getState().Exit(fsm)
@@ -211,8 +230,33 @@ class LabaMap_PreType(LabaMap_Default):
             try:
                 ctxt.saveName()
             finally:
-                fsm.setState(LabaMap.PreAsg)
+                fsm.setState(LabaMap.PreAsgSpace)
                 fsm.getState().Entry(fsm)
+
+
+class LabaMap_PreNameSpace(LabaMap_Default):
+
+    def asg(self, fsm):
+        fsm.getState().Exit(fsm)
+        fsm.setState(LabaMap.ASG)
+        fsm.getState().Entry(fsm)
+
+
+    def char(self, fsm):
+        ctxt = fsm.getOwner()
+        fsm.getState().Exit(fsm)
+        fsm.clearState()
+        try:
+            ctxt.addC()
+        finally:
+            fsm.setState(LabaMap.PreName)
+            fsm.getState().Entry(fsm)
+
+
+    def space(self, fsm):
+        fsm.getState().Exit(fsm)
+        fsm.setState(LabaMap.PreNameSpace)
+        fsm.getState().Entry(fsm)
 
 
 class LabaMap_PreName(LabaMap_Default):
@@ -272,15 +316,21 @@ class LabaMap_PreName(LabaMap_Default):
         try:
             ctxt.saveName()
         finally:
-            fsm.setState(LabaMap.PreAsg)
+            fsm.setState(LabaMap.PreAsgSpace)
             fsm.getState().Entry(fsm)
 
 
-class LabaMap_PreAsg(LabaMap_Default):
+class LabaMap_PreAsgSpace(LabaMap_Default):
 
     def asg(self, fsm):
         fsm.getState().Exit(fsm)
         fsm.setState(LabaMap.ASG)
+        fsm.getState().Entry(fsm)
+
+
+    def space(self, fsm):
+        fsm.getState().Exit(fsm)
+        fsm.setState(LabaMap.PreAsgSpace)
         fsm.getState().Entry(fsm)
 
 
@@ -312,7 +362,39 @@ class LabaMap_ASG(LabaMap_Default):
 
     def space(self, fsm):
         fsm.getState().Exit(fsm)
-        fsm.setState(LabaMap.PreVar)
+        fsm.setState(LabaMap.PreVarSpace)
+        fsm.getState().Entry(fsm)
+
+
+class LabaMap_PreVarSpace(LabaMap_Default):
+
+    def char(self, fsm):
+        ctxt = fsm.getOwner()
+        if ctxt.nameGuard() :
+            fsm.getState().Exit(fsm)
+            fsm.clearState()
+            try:
+                ctxt.addC()
+            finally:
+                fsm.setState(LabaMap.VarName)
+                fsm.getState().Entry(fsm)
+        else:
+            LabaMap_Default.char(self, fsm)
+        
+    def num(self, fsm):
+        ctxt = fsm.getOwner()
+        fsm.getState().Exit(fsm)
+        fsm.clearState()
+        try:
+            ctxt.addC()
+        finally:
+            fsm.setState(LabaMap.VarNum)
+            fsm.getState().Entry(fsm)
+
+
+    def space(self, fsm):
+        fsm.getState().Exit(fsm)
+        fsm.setState(LabaMap.PreVarSpace)
         fsm.getState().Entry(fsm)
 
 
@@ -459,15 +541,18 @@ class LabaMap(object):
 
     Start = LabaMap_Start('LabaMap.Start', 0)
     Line = LabaMap_Line('LabaMap.Line', 1)
-    PreType = LabaMap_PreType('LabaMap.PreType', 2)
-    PreName = LabaMap_PreName('LabaMap.PreName', 3)
-    PreAsg = LabaMap_PreAsg('LabaMap.PreAsg', 4)
-    ASG = LabaMap_ASG('LabaMap.ASG', 5)
-    PreVar = LabaMap_PreVar('LabaMap.PreVar', 6)
-    VarNum = LabaMap_VarNum('LabaMap.VarNum', 7)
-    VarName = LabaMap_VarName('LabaMap.VarName', 8)
-    OK = LabaMap_OK('LabaMap.OK', 9)
-    Error = LabaMap_Error('LabaMap.Error', 10)
+    PreTypeSpace = LabaMap_PreTypeSpace('LabaMap.PreTypeSpace', 2)
+    PreType = LabaMap_PreType('LabaMap.PreType', 3)
+    PreNameSpace = LabaMap_PreNameSpace('LabaMap.PreNameSpace', 4)
+    PreName = LabaMap_PreName('LabaMap.PreName', 5)
+    PreAsgSpace = LabaMap_PreAsgSpace('LabaMap.PreAsgSpace', 6)
+    ASG = LabaMap_ASG('LabaMap.ASG', 7)
+    PreVarSpace = LabaMap_PreVarSpace('LabaMap.PreVarSpace', 8)
+    PreVar = LabaMap_PreVar('LabaMap.PreVar', 9)
+    VarNum = LabaMap_VarNum('LabaMap.VarNum', 10)
+    VarName = LabaMap_VarName('LabaMap.VarName', 11)
+    OK = LabaMap_OK('LabaMap.OK', 12)
+    Error = LabaMap_Error('LabaMap.Error', 13)
     Default = LabaMap_Default('LabaMap.Default', -1)
 
 class Laba_sm(statemap.FSMContext):
